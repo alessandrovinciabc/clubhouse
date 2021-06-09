@@ -1,8 +1,13 @@
+require('dotenv').config();
+
 let path = require('path');
 
 let express = require('express');
 let app = express();
 const PORT = process.env.PORT || 3000;
+
+const initializeDB = require('./models/db');
+initializeDB();
 
 let logger = require('morgan');
 
