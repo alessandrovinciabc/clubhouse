@@ -1,4 +1,4 @@
-let indexController = require('express').Router();
+let indexController = {};
 
 indexController.GETRoot = (req, res) => {
   res.render('indexView');

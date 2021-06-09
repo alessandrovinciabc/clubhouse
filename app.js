@@ -17,8 +17,10 @@ app.use('/static', express.static(path.join(__dirname, 'static')));
 /*-----------------Routes-----------------*/
 /*****************************************/
 let indexRoute = require('./routes/indexRoute');
+let authRoute = require('./routes/authRoute');
 
 app.use(indexRoute);
+app.use(authRoute);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}...`);
