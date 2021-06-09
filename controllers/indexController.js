@@ -4,4 +4,4 @@ indexController.GETRoot = (req, res) => {
   res.render('indexView');
 };
 
-exports.index = indexController;
+module.exports = indexController;
