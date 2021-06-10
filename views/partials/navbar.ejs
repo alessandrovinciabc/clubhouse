@@ -8,15 +8,18 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <h5 class="text-light text-center mb-0 mx-auto">
+          <h5 class="text-light text-center mb-0">
             <%= locals.user?.username ? `Welcome back, ${user.username}` : '' %>
           </h5>
-          <div class="navbar-nav">
+          <div class="navbar-nav ms-auto">
             <a class="nav-link active" aria-current="page" href="#">Home</a>
             <% if(!user){ %>
               <a class="nav-link" href="/login">Login</a>
               <a class="nav-link btn btn-warning text-dark" href="/signup">Sign up</a>
             <% } else { %>
+              <% if(user.membership === 'none') { %>
+              <a class="nav-link" href="/join">Become a member</a>
+              <% } %>
               <a class="nav-link btn btn-warning text-dark" href="/logout">Logout</a>
             <% } %>
           </div>

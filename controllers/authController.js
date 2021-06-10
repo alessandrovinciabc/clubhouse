@@ -13,6 +13,30 @@ authController.GETLogout = (req, res) => {
   res.redirect('/');
 };
 
+authController.GETJoin = (req, res) => {
+  if (!req.user) return res.redirect('/');
+  res.render('becomeAMember');
+};
+
+authController.POSTJoin = (req, res, next) => {
+  if (!req.user) return res.redirect('/');
+
+  if (req.body.password !== process.env.PASSCODE) {
+    req.flash('error', 'Wrong.');
+    return res.redirect('/join');
+  }
+
+  User.findOneAndUpdate(
+    { username: req.user.username },
+    { membership: 'member' },
+    (err, result) => {
+      if (err) return next(err);
+
+      res.render('membershipSuccess');
+    }
+  );
+};
+
 authController.GETLogin = (req, res) => {
   res.render('loginView');
 };
