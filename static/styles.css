@@ -1,3 +1,12 @@
 .card--auth {
   width: 350px;
 }
+
+.card--new {
+  width: 350px;
+}
+
+.textarea--new {
+  resize: none;
+  height: 150px;
+}

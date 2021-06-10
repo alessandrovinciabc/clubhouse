@@ -1,6 +1,38 @@
 <%- include('partials/header') %>
 <%- include('partials/navbar') %>
 
+<div class="container-fluid d-flex align-items-center flex-column py-5">
+<% if(user) { %>
 
+    
+    <button class="btn-new-msg btn btn-warning mb-2">New message</button>
+        <div class="card card--new d-none">
+            <div class="card-body">
+              <h2 class="card-title text-center">New message</h2>
+              <form method="POST" action="/new">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" name="title" id="title" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea name="message" id="message" class="form-control textarea--new" required></textarea>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-danger">Confirm</button>
+                </div>
+              </form>
+              <% if(locals.error){ %>
+              <div class="my-2 text-danger text-center">
+                <%= locals.error %>
+              </div>
+              <% } %>
+            </div>
+          </div>
+
+<% } %>
+</div>
+
+<script src="/static/mainPage.js"></script>
 
 <%- include('partials/footer') %>
