@@ -8,6 +8,11 @@ const passport = require('passport');
 
 let authController = {};
 
+authController.GETLogout = (req, res) => {
+  req.logout();
+  res.redirect('/');
+};
+
 authController.GETLogin = (req, res) => {
   res.render('loginView');
 };
