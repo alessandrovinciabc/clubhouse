@@ -10,6 +10,41 @@ authController.GETLogin = (req, res) => {
   res.render('loginView');
 };
 
+authController.POSTLogin = [
+  body('username')
+    .notEmpty()
+    .withMessage('Missing field.')
+    .isString()
+    .withMessage('Not a string.'),
+  body('password')
+    .notEmpty()
+    .withMessage('Missing field.')
+    .isString()
+    .withMessage('Not a string.'),
+  async (req, res) => {
+    const err = validationResult(req);
+    if (!err.isEmpty()) {
+      return res.status(400).json({ err: err.array() });
+    }
+
+    let user = await User.findOne({
+      username: req.body.username,
+    });
+
+    if (user == null)
+      return res.status(400).json('Invalid username or password.');
+
+    let passwordMatches = await bcrypt.compare(
+      req.body.password,
+      user.passwordHash
+    );
+    if (!passwordMatches)
+      return res.status(400).json('Invalid username or password.');
+
+    res.json(user);
+  },
+];
+
 authController.GETSignup = (req, res) => {
   res.render('signupView');
 };

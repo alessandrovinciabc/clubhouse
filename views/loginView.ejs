@@ -1,1 +1,26 @@
-login
+<%- include('partials/header') %>
+<%- include('partials/navbarGoBack') %>
+
+<div class="container-fluid d-flex justify-content-center py-5">
+    <div class="card--auth card">
+        <div class="card-body">
+          <h2 class="card-title text-center">Log in</h2>
+          <form method="POST">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" name="username" id="username" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" id="password" class="form-control" minlength="3" required>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-danger">Confirm</button>
+            </div>
+          </form>
+        </div>
+      </div>
+</div>
+
+
+<%- include('partials/footer') %>
