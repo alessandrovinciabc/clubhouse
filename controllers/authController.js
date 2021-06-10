@@ -44,7 +44,9 @@ authController.POSTSignup = [
     .isString()
     .withMessage('Not a string.')
     .isLength({ max: 100 })
-    .withMessage('Must have <= 100 characters.'),
+    .withMessage('Must have <= 100 characters.')
+    .custom((value, { req }) => value === req.body.confirmpassword)
+    .withMessage('Passwords do not match.'),
   (req, res) => {
     const err = validationResult(req);
     if (!err.isEmpty()) {
