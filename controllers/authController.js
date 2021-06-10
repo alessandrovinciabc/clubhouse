@@ -1,6 +1,9 @@
 const { body, validationResult } = require('express-validator');
 const User = require('../models/User');
 
+const bcrypt = require('bcrypt');
+const SALT_ROUNDS = 12;
+
 let authController = {};
 
 authController.GETLogin = (req, res) => {
@@ -48,12 +51,15 @@ authController.POSTSignup = [
       return res.status(400).json({ err: err.array() });
     }
 
-    User.create({
-      firstName: req.body.firstname,
-      lastName: req.body.lastname,
-      username: req.body.username,
-      passwordHash: req.body.password,
-    }).then((user) => res.json(user));
+    bcrypt.hash(req.body.password, SALT_ROUNDS, function (err, hash) {
+      if (err) return res.status(500).json(err);
+      User.create({
+        firstName: req.body.firstname,
+        lastName: req.body.lastname,
+        username: req.body.username,
+        passwordHash: hash,
+      }).then((user) => res.json(user));
+    });
   },
 ];
 
