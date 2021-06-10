@@ -18,6 +18,11 @@
                 <button class="btn btn-danger">Confirm</button>
             </div>
           </form>
+          <% if(locals.error){ %>
+          <div class="my-2 text-danger text-center">
+            <%= locals.error %>
+          </div>
+          <% } %>
         </div>
       </div>
 </div>

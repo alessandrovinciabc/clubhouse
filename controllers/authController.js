@@ -4,46 +4,19 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 12;
 
+const passport = require('passport');
+
 let authController = {};
 
 authController.GETLogin = (req, res) => {
   res.render('loginView');
 };
 
-authController.POSTLogin = [
-  body('username')
-    .notEmpty()
-    .withMessage('Missing field.')
-    .isString()
-    .withMessage('Not a string.'),
-  body('password')
-    .notEmpty()
-    .withMessage('Missing field.')
-    .isString()
-    .withMessage('Not a string.'),
-  async (req, res) => {
-    const err = validationResult(req);
-    if (!err.isEmpty()) {
-      return res.status(400).json({ err: err.array() });
-    }
-
-    let user = await User.findOne({
-      username: req.body.username,
-    });
-
-    if (user == null)
-      return res.status(400).json('Invalid username or password.');
-
-    let passwordMatches = await bcrypt.compare(
-      req.body.password,
-      user.passwordHash
-    );
-    if (!passwordMatches)
-      return res.status(400).json('Invalid username or password.');
-
-    res.json(user);
-  },
-];
+authController.POSTLogin = passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true,
+});
 
 authController.GETSignup = (req, res) => {
   res.render('signupView');
@@ -82,7 +55,7 @@ authController.POSTSignup = [
     .withMessage('Must have <= 100 characters.')
     .custom((value, { req }) => value === req.body.confirmpassword)
     .withMessage('Passwords do not match.'),
-  (req, res) => {
+  (req, res, next) => {
     const err = validationResult(req);
     if (!err.isEmpty()) {
       return res.status(400).json({ err: err.array() });
@@ -95,7 +68,12 @@ authController.POSTSignup = [
         lastName: req.body.lastname,
         username: req.body.username,
         passwordHash: hash,
-      }).then((user) => res.json(user));
+      }).then((user) => {
+        req.login(user, (err) => {
+          if (err) return next(err);
+          res.redirect('/');
+        });
+      });
     });
   },
 ];
