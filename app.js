@@ -6,6 +6,11 @@ let express = require('express');
 let app = express();
 const PORT = process.env.PORT || 3000;
 
+let compression = require('compression');
+let helmet = require('helmet');
+app.use(compression());
+app.use(helmet());
+
 const bcrypt = require('bcrypt');
 const initializeDB = require('./models/db');
 initializeDB();
