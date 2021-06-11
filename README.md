@@ -1,5 +1,7 @@
 # Private Club
 
+## Table of contents
+
 - [Summary](#Summary)
 - [Features](#Features)
 - [Technologies](#Technologies)
