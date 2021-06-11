@@ -6,7 +6,7 @@ indexController.GETRoot = async (req, res) => {
   let newMessages;
 
   try {
-    newMessages = await Message.find({}).populate('owner');
+    newMessages = await Message.find({}).populate('owner').sort('-createdAt');
   } catch (err) {
     res.status(500).json({ err: 'Unexpected error.' });
   }
