@@ -5,18 +5,18 @@
 <% if(user) { %>
 
     
-    <button class="btn-new-msg btn btn-warning mb-2">New message</button>
-        <div class="card card--new d-none">
+        <button class="btn-new-msg btn btn-warning mb-4">New message</button>
+        <div class="card card--new d-none mb-4">
             <div class="card-body">
               <h2 class="card-title text-center">New message</h2>
               <form method="POST" action="/new">
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
-                    <input type="text" name="title" id="title" class="form-control" required>
+                    <input type="text" name="title" id="title" class="form-control" maxlength="60" autocomplete="off" required>
                 </div>
                 <div class="mb-3">
                     <label for="message" class="form-label">Message</label>
-                    <textarea name="message" id="message" class="form-control textarea--new" required></textarea>
+                    <textarea maxlength="280" autocomplete="off" name="message" id="message" class="form-control textarea--new" required></textarea>
                 </div>
                 <div class="text-center">
                     <button class="btn btn-danger">Confirm</button>
@@ -28,8 +28,38 @@
               </div>
               <% } %>
             </div>
-          </div>
+        </div>
+<% } %>
 
+<% if(messages.length > 0){ %>
+
+    <% messages.forEach((message) => { %>
+        <div class="card card--message bg-dark text-white my-3">
+            <div class="card-body">
+                <h5 class="card-title">
+                  <%= message.title %>
+                </h5>
+                <div class="mb-3">
+                    <p>
+                        <%= message.message %>
+                    </p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <p class="mb-0 text-muted">
+                    Author:
+                    <% if(!user || user.membership == 'none') { %>
+                        Anonymous
+                    <% } else { %>
+                        <%= message.owner.firstName + ' ' + message.owner.lastName %>
+                    <% } %>
+                </p>
+            </div>
+        </div>
+    <% }); %>
+
+<% } else { %>
+    <p class="text-light text-center mt-5">No messages to show!</p>
 <% } %>
 </div>
 

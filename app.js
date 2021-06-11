@@ -62,6 +62,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use((req, res, next) => {
   res.locals.user = req.user;
   res.locals.error = req.flash('error');
+  res.locals.messages = [];
   next();
 });
 
@@ -81,9 +82,11 @@ app.locals.siteName = 'Private Club👋';
 /*****************************************/
 let indexRoute = require('./routes/indexRoute');
 let authRoute = require('./routes/authRoute');
+let messageRoute = require('./routes/messageRoute');
 
 app.use(indexRoute);
 app.use(authRoute);
+app.use(messageRoute);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}...`);

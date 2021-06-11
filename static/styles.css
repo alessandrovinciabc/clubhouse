@@ -6,6 +6,13 @@
   width: 350px;
 }
 
+.card--message {
+  min-height: 200px;
+  width: 350px;
+
+  background-color: #393e46 !important;
+}
+
 .textarea--new {
   resize: none;
   height: 150px;
