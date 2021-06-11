@@ -20,6 +20,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
 const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 const flash = require('connect-flash');
 app.use(flash());
 
@@ -53,11 +54,21 @@ passport.deserializeUser(function (id, done) {
   });
 });
 
+let store = new MongoDBStore({
+  uri: process.env.DB_STRING,
+  collection: 'sessions',
+  connectionOptions: {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+});
+
 app.use(
   session({
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
+    store,
   })
 );
 app.use(passport.initialize());
