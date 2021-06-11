@@ -46,14 +46,18 @@
                 </div>
             </div>
             <div class="card-footer">
-                <p class="mb-0 text-muted">
-                    Author:
-                    <% if(!user || user.membership == 'none') { %>
-                        Anonymous
-                    <% } else { %>
-                        <%= message.owner.firstName + ' ' + message.owner.lastName %>
-                    <% } %>
-                </p>
+                <div class="mb-0 text-muted d-flex justify-content-between">
+                    <div class="text-center">
+                        <% if(!user || user.membership == 'none') { %>
+                            Anonymous
+                        <% } else { %>
+                            <%= message.owner.firstName + ' ' + message.owner.lastName %>
+                        <% } %>
+                    </div>
+                    <div class="text-center">
+                        <%= message.createdAt.toLocaleString() %>
+                    </div>
+                </div>
             </div>
         </div>
     <% }); %>
