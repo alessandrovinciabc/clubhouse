@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+<%- include('partials/navbarGoBack') %>
+
+<div class="container-fluid d-flex justify-content-center py-5">
+    <div class="card--auth card">
+        <div class="card-body">
+          <h2 class="card-title text-center">Become a moderator</h2>
+          <form method="POST">
+            <div class="mb-3">
+                <label for="password" class="form-label">Secret Phrase</label>
+                <input type="password" name="password" id="password" class="form-control" required>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-danger">Confirm</button>
+            </div>
+          </form>
+          <% if(locals.error){ %>
+          <div class="my-2 text-danger text-center">
+            <%= locals.error %>
+          </div>
+          <% } %>
+        </div>
+      </div>
+</div>
+
+
+<%- include('partials/footer') %>

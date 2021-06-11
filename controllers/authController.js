@@ -37,6 +37,30 @@ authController.POSTJoin = (req, res, next) => {
   );
 };
 
+authController.GETModerator = (req, res) => {
+  if (!req.user) return res.redirect('/');
+  res.render('becomeAMod');
+};
+
+authController.POSTModerator = (req, res, next) => {
+  if (!req.user) return res.redirect('/');
+
+  if (req.body.password !== process.env.ADMIN) {
+    req.flash('error', 'Wrong.');
+    return res.redirect('/moderator');
+  }
+
+  User.findOneAndUpdate(
+    { username: req.user.username },
+    { membership: 'admin' },
+    (err, result) => {
+      if (err) return next(err);
+
+      res.render('membershipSuccess');
+    }
+  );
+};
+
 authController.GETLogin = (req, res) => {
   res.render('loginView');
 };

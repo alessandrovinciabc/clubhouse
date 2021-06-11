@@ -8,5 +8,9 @@ router.get('/logout', controller.GETLogout);
 router.route('/signup').get(controller.GETSignup).post(controller.POSTSignup);
 
 router.route('/join').get(controller.GETJoin).post(controller.POSTJoin);
+router
+  .route('/moderator')
+  .get(controller.GETModerator)
+  .post(controller.POSTModerator);
 
 module.exports = router;

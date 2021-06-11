@@ -19,6 +19,8 @@
             <% } else { %>
               <% if(user.membership === 'none') { %>
               <a class="nav-link" href="/join">Become a member</a>
+              <% } else if(user.membership === 'member') { %>
+              <a class="nav-link" href="/moderator">Become a mod</a>
               <% } %>
               <a class="nav-link btn btn-warning text-dark" href="/logout">Logout</a>
             <% } %>
