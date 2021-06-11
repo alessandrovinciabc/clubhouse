@@ -4,6 +4,18 @@ let messageController = {};
 
 const Message = require('../models/Message');
 
+messageController.POSTDelete = async (req, res, next) => {
+  if (!req.user || req.user.membership !== 'admin') return res.redirect('/');
+
+  try {
+    await Message.findOneAndDelete(req.params.messageid);
+  } catch (err) {
+    return next(err);
+  }
+
+  res.redirect('/');
+};
+
 messageController.POSTNew = [
   (req, res, next) => {
     if (!req.user) return res.redirect('/');
